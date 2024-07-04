@@ -18,9 +18,10 @@ class Solution {
         Arrays.fill(dp2,-1);
         // int first = recursion(firstLeftOut,firstLeftOut.length-1);
         // int second = recursion(lastLeftOut,lastLeftOut.length-1);
-        // int first = recursion(firstLeftOut,firstLeftOut.length-1);
-        int first = memoization(firstLeftOut,firstLeftOut.length-1,dp);
-        int second = memoization(lastLeftOut,lastLeftOut.length-1,dp2);
+        // int first = memoization(firstLeftOut,firstLeftOut.length-1,dp);
+        // int second = memoization(lastLeftOut,lastLeftOut.length-1,dp2);
+         int first = tabulation(firstLeftOut,dp);
+        int second = tabulation(lastLeftOut,dp2);
         return Math.max(first,second);
 
     }
@@ -55,8 +56,18 @@ class Solution {
         return dp[indx];
     }
 
-    private int tabulation() {
-            return 0;
+    private int tabulation(int[] nums , int[] dp) {
+        dp[0]= nums[0];
+        int neg =0;
+        for(int i=1 ;i<nums.length;i++){
+            int pick = nums[i];
+            if(i>1){
+                pick += dp[i-2];
+            }
+            int notPick = dp[i-1] +0;
+            dp[i] = Math.max(pick,notPick);
+        }
+            return dp[nums.length-1];
     }
 
     private int spaceOptimization(int[] arr){
