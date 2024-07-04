@@ -20,8 +20,11 @@ class Solution {
         // int second = recursion(lastLeftOut,lastLeftOut.length-1);
         // int first = memoization(firstLeftOut,firstLeftOut.length-1,dp);
         // int second = memoization(lastLeftOut,lastLeftOut.length-1,dp2);
-         int first = tabulation(firstLeftOut,dp);
-        int second = tabulation(lastLeftOut,dp2);
+        //  int first = tabulation(firstLeftOut,dp);
+        // int second = tabulation(lastLeftOut,dp2);
+        int first = spaceOptimization(firstLeftOut);
+        int second = spaceOptimization(lastLeftOut);
+        
         return Math.max(first,second);
 
     }
@@ -71,6 +74,18 @@ class Solution {
     }
 
     private int spaceOptimization(int[] arr){
-            return 0;
+            int prev = arr[0];
+            int prev2=0;
+            for(int i=1;i<arr.length;i++){
+                int pick = arr[i];
+                if(i>1){
+                    pick+=prev2;
+                }
+                int notPick = prev +0;
+                int curr = Math.max(pick,notPick);
+                prev2 = prev;
+                prev = curr;
+            }
+            return prev;
     }
 }
