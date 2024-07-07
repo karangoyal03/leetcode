@@ -7,7 +7,8 @@ class Solution {
             Arrays.fill(val,-1);
         }
         // return recursion(m-1,n-1,obstacleGrid);
-        return memoization(m-1,n-1,obstacleGrid,dp);
+        // return memoization(m-1,n-1,obstacleGrid,dp);
+        return tabulation(m,n,obstacleGrid,dp);
     }
     private int recursion(int row , int col  ,int[][]board) {
     if(row<0 || col <0) {
@@ -41,8 +42,39 @@ class Solution {
         return dp[row][col];
     }
     int up = memoization(row-1,col,board,dp);
-    int left =memoization(row,col-1,board,dp);
+    int left = memoization(row,col-1,board,dp);
     dp[row][col] = up+left;
     return dp[row][col];
+  }
+
+  private int tabulation(int m , int n , int[][]board , int[][]dp){
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            if(board[i][j]==1){
+                dp[i][j]=0;
+                continue;
+            }
+             if(i ==0 && j == 0){
+                dp[0][0]=1;
+                continue;
+            }
+            
+                    int up =0; 
+                    int left =0; 
+
+                    if(i>0){
+                        up = dp[i-1][j];
+                    }
+
+                    if(j>0){
+                        left = dp[i][j-1]; 
+                    }
+
+                    dp[i][j] = up+left;
+                
+            
+        }
+    }
+    return dp[m-1][n-1];
   }
 }
