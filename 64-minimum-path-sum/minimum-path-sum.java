@@ -6,7 +6,8 @@ class Solution {
         }
         // return recusrion(grid,grid.length-1,grid[0].length-1);
         // return memoization(grid,grid.length-1,grid[0].length-1,dp);
-        return tabulation(grid,grid.length,grid[0].length,dp);
+        // return tabulation(grid,grid.length,grid[0].length,dp);
+        return spaceOptimization(grid,grid.length,grid[0].length);
     }
 
     private int recusrion(int[][] grid , int row , int col) {
@@ -62,5 +63,32 @@ class Solution {
             }
         }
         return dp[m-1][n-1];
+    }
+
+    private int spaceOptimization(int[][]grid, int m , int n) {
+        int[] prev = new int[n];
+        for(int i=0;i<m;i++){
+            int[] temp = new int[n];
+            for(int j=0;j<n;j++){
+                if(i==0 && j==0){
+                    temp[j] = grid[i][j];
+                    continue;
+                }
+
+                int up = (int)Math.pow(10,9);
+                int left =(int)Math.pow(10,9);
+                if(i>0) {
+                    up = grid[i][j] + prev[j];
+                }
+
+                if(j>0) {
+                    left = grid[i][j] + temp[j-1];
+                }
+
+                temp[j] = Math.min(up,left);
+            }
+            prev = temp;
+        }
+        return prev[n-1];
     }
 }
