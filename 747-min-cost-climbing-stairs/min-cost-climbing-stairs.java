@@ -5,8 +5,8 @@ class Solution {
                 Arrays.fill(dp,-1);
         // return Math.min(recursion(cost,n-1),recursion(cost,n-2));
         // return Math.min(memoization(cost,n-1,dp),memoization(cost,n-2,dp));
-        return Math.min(tabulation(cost,n-1),tabulation(cost,n-2));
-        // return Math.min(spaceOptimization(cost,n-1),spaceOptimization(cost,n-2));
+        // return Math.min(tabulation(cost,n-1),tabulation(cost,n-2));
+        return Math.min(spaceOptimization(cost,n-1),spaceOptimization(cost,n-2));
     }
 
     private int recursion(int[] cost , int n){
