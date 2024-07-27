@@ -4,7 +4,8 @@ class Solution {
         Arrays.fill(dp,-1);
         // return recursion(n);
         // return memoization(n,dp);
-        return tabulation(n);
+        // return tabulation(n);
+        return spaceOptimization(n);
     }
 
     private int recursion(int n){
@@ -52,5 +53,17 @@ class Solution {
             dp[i] = first + second;
         }
         return dp[n];
+    }
+
+    private int spaceOptimization(int n){
+        int prev =1;
+        int prev2 =0;
+
+        for(int i=1;i<=n;i++){
+            int curr = prev + prev2;
+            prev2 = prev;
+            prev = curr;
+        }
+        return prev;
     }
 }
