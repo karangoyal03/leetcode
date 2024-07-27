@@ -3,7 +3,8 @@ class Solution {
         int[] dp = new int[n+1];
         Arrays.fill(dp,-1);
         // return recursion(n);
-        return memoization(n,dp);
+        // return memoization(n,dp);
+        return tabulation(n);
     }
 
     private int recursion(int n){
@@ -35,6 +36,21 @@ class Solution {
         int step1 = memoization(n-1,dp);
         int step2 = memoization(n-2,dp);
         dp[n] = step1 + step2;
+        return dp[n];
+    }
+
+    private int tabulation(int n){
+        int[] dp = new int[n+1];
+        dp[0] =1;
+
+        for(int i=1;i<=n;i++){
+            int first = dp[i-1];
+            int second = 0;
+            if(i>1){
+            second = dp[i-2];
+            }
+            dp[i] = first + second;
+        }
         return dp[n];
     }
 }
