@@ -4,7 +4,8 @@ class Solution {
         int[] dp = new int[n+1];
         Arrays.fill(dp,-1);
         // return recursion(nums,n-1);
-        return memoization(nums,n-1,dp);
+        // return memoization(nums,n-1,dp);
+        return tabulation(nums,n-1,dp);
     }
 
     private int recursion(int[] nums , int n){
@@ -32,6 +33,19 @@ class Solution {
         int notPick = memoization(nums,n-1,dp) + 0;
 
         dp[n] = Math.max(pick,notPick);
+        return dp[n];
+    }
+
+    private int tabulation(int[]nums , int n , int[]dp){
+        dp[0] = nums[0];
+        for(int i =1;i<=n;i++){
+             int pick  = nums[i];
+            if(i>1){
+                pick += dp[i-2];
+            }   
+            int notPick = dp[i-1] + 0;
+            dp[i] = Math.max(pick,notPick);
+        }
         return dp[n];
     }
 
