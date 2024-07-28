@@ -5,7 +5,8 @@ class Solution {
         Arrays.fill(dp,-1);
         // return recursion(nums,n-1);
         // return memoization(nums,n-1,dp);
-        return tabulation(nums,n-1,dp);
+        // return tabulation(nums,n-1,dp);
+        return spaceOptimization(nums,n-1);
     }
 
     private int recursion(int[] nums , int n){
@@ -47,6 +48,23 @@ class Solution {
             dp[i] = Math.max(pick,notPick);
         }
         return dp[n];
+    }
+
+
+    private int spaceOptimization(int[]nums , int n) {
+        int prev =nums[0];
+        int prev2 =0;
+        for(int i=1;i<=n;i++){
+            int pick = nums[i];
+            if(i>1){
+                pick += prev2;
+            }
+            int notPick = prev +0;
+            int curr = Math.max(pick,notPick);
+            prev2 = prev;
+            prev =curr;
+        }
+        return prev;
     }
 
 }
