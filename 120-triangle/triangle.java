@@ -1,61 +1,39 @@
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
-        // return recursion(triangle,triangle.size(),0,0);
-        int[][] dp = new int[triangle.size()][triangle.size()];
-        for(int[] val : dp){
+        int n = triangle.size();
+        int[][] dp = new int[n+1][n+1];
+        for(int[] val:dp){
             Arrays.fill(val,-1);
         }
-        // return memoization(triangle,triangle.size(),0,0,dp);
-        return tabulation(triangle,triangle.size(),triangle.size(),dp);
+        return memoization(triangle,n,0,0,dp);
+        // return recursion(triangle, n, 0, 0);
     }
 
-    private int recursion(List<List<Integer>> triangle , int indx , int row , int col){
-        if(indx-1  == row) {
+    private int recursion(List<List<Integer>> triangle, int n, int row, int col) {
+        if (row == n - 1) {
             return triangle.get(row).get(col);
         }
-        if(row == indx) {
-            return (int)Math.pow(10,9);
+        if (row == n) {
+            return (int) 1e9;
         }
-        int down = triangle.get(row).get(col) +recursion(triangle,indx,row+1,col);
-        int diagonal = triangle.get(row).get(col) + recursion(triangle,indx,row+1,col+1);
-        return Math.min(down,diagonal);
-   }
+        int bottom = recursion(triangle, n, row + 1, col) + triangle.get(row).get(col);
+        int rightDiagonal = recursion(triangle, n, row + 1, col + 1) + triangle.get(row).get(col);
+        return Math.min(bottom, rightDiagonal);
+    }
 
-   private int memoization(List<List<Integer>> triangle , int indx , int row , int col, int[][]dp){
-        if(indx -1 == row) {
+    private int memoization(List<List<Integer>> triangle, int n, int row, int col,int[][]dp){
+        if(row == n-1){
             return triangle.get(row).get(col);
         }
-        if(row == indx) {
-            return (int)Math.pow(10,9);
+        if(row == n){
+            return (int)1e9;
         }
         if(dp[row][col]!=-1){
             return dp[row][col];
         }
-        int down = triangle.get(row).get(col) + memoization(triangle,indx,row+1,col,dp);
-        int diagonal = triangle.get(row).get(col) + memoization(triangle,indx,row+1,col+1,dp);
-        dp[row][col] = Math.min(down,diagonal);
+        int bottom = memoization(triangle,n,row+1,col,dp) + triangle.get(row).get(col);
+        int rightDiagonal = memoization(triangle,n,row+1,col+1,dp) + triangle.get(row).get(col);
+        dp[row][col] = Math.min(bottom, rightDiagonal);
         return dp[row][col];
-
-   }
-
-   private int tabulation(List<List<Integer>> triangle , int m, int n,  int[][]dp) {
-    for(int i=0;i<n;i++){
-        dp[m-1][i] = triangle.get(m-1).get(i);
     }
-
-        // since the memoization started from 0 to n-1 then tabulation will start form n-1 to 0
-        for(int i=n-2;i>=0;i--){
-            for(int j=i;j>=0;j--){
-
-                int down = triangle.get(i).get(j) + dp[i+1][j];
-                int diagonal = triangle.get(i).get(j) + dp[i+1][j+1];
-                dp[i][j] = Math.min(down,diagonal);
-            }
-        }
-
-        return dp[0][0];
-
-   }
-
-
 }
