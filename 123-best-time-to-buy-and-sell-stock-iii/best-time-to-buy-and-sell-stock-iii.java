@@ -3,11 +3,11 @@ class Solution {
     // return recursion(prices, 0, 1, 2);
     int n =prices.length;
     int[][][] dp = new int[n+1][2][3];
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < 2; j++) {
-                Arrays.fill(dp[i][j], -1);
-        }
+   for(int[][] grid : dp){
+    for(int[] val : grid){
+        Arrays.fill(val,-1);
     }
+   }
     return memoization(prices,0,1,2,dp);
 }
 
@@ -47,6 +47,10 @@ private int memoization(int[] prices, int indx, int canBuy, int cap, int[][][] d
 
     dp[indx][canBuy][cap] = profit;
     return dp[indx][canBuy][cap];
+}
+
+private int tabulation(int[]prices , int n){
+    return 0;
 }
 
 }
