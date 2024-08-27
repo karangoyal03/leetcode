@@ -19,7 +19,8 @@ class Solution {
         for(int i =0;i<V;i++){
             if(visited[i] == false){
                 count++;
-                dfs(i,adj,visited);
+                // dfs(i,adj,visited);
+                bfs(i,adj,visited);
             }
         }
 
@@ -32,6 +33,23 @@ class Solution {
         for( int it : adj.get(node)){
             if(visited[it] == false){
                 dfs(it,adj,visited);
+            }
+        }
+    }
+
+    private void bfs(int node , ArrayList<ArrayList<Integer>> adj , boolean[] visited) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(node);
+        visited[node] = true;
+
+        while(!queue.isEmpty()) {
+            int n = queue.poll();
+
+            for(int it : adj.get(n)){
+                if(visited[it] == false){
+                    visited[it] = true;
+                    queue.add(it);
+                }
             }
         }
     }
