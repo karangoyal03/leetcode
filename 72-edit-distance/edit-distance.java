@@ -2,12 +2,13 @@ class Solution {
     public int minDistance(String s, String t) {
         int i = s.length()-1;
         int j = t.length()-1;
-        int[][] dp = new int[i+1][j+1];
+        int[][] dp = new int[i+2][j+12];
         // return recursion(s,t,i,j);
         for(int[] val : dp){
             Arrays.fill(val,-1);
         }
-        return memoization(s,t,i,j,dp);
+        // return memoization(s,t,i,j,dp);
+        return tabulation(s,t,i+1,j+1,dp);
     }
 
     private int recursion(String s , String t , int i , int j){
@@ -54,5 +55,28 @@ class Solution {
             dp[i][j] = Math.min(a,Math.min(b,c));
         }
         return dp[i][j];
+    }
+
+    private int tabulation(String s , String t  , int n , int m, int[][]dp){
+        for(int i=0;i<n+1;i++){
+            dp[i][0] =i;
+        }
+
+        for(int i =0;i<m+1;i++){
+            dp[0][i] = i;
+        }
+
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<m+1;j++){
+
+                if(s.charAt(i-1) == t.charAt(j-1)){
+                    dp[i][j] = 0 + dp[i-1][j-1];
+                }else{
+                    dp[i][j]  = 1 + Math.min(dp[i][j-1] , Math.min(dp[i-1][j],dp[i-1][j-1]));
+                }
+            }
+        }
+
+        return dp[n][m];
     }
 }
