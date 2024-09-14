@@ -16,7 +16,11 @@
 class Solution {
     List<Integer> ans = new ArrayList<>();
     public List<Integer> preorderTraversal(TreeNode root) {
-        preorder(root);
+        // preorder(root);
+        if(root == null){
+            return ans;
+        }
+        iterativeMethodWith1Stack(root);
         return ans;
     }
 
@@ -29,4 +33,20 @@ class Solution {
         preorder(root.left);
         preorder(root.right);
     }
+
+    private void iterativeMethodWith1Stack(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            ans.add(node.val);
+            if(node.right!=null){
+                stack.push(node.right);
+            }
+
+            if(node.left!=null){
+                stack.push(node.left);
+            }
+        }
+      }
 }
