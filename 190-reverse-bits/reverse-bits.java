@@ -1,18 +1,18 @@
 public class Solution {
     // you need treat n as an unsigned value
     public int reverseBits(int n) {
-        // long num = Integer.parseInt(Integer.toBinaryString(n));
-        // long reverse = 0;
-        // while(num!=0){
-        //     long digit = num %10;
-        //     reverse = reverse*10 + digit;
-        //     num = num /10;
-        // }
-
-        // int val = Integer.parseInt(reverse+"" ,2);
-        // return val;
-        return Integer.reverse(n);
-
-
+        int left =0;
+        int right = 31;
+        String binaryString = String.format("%32s", Integer.toBinaryString(n)).replace(' ', '0');
+       char[] charArray = binaryString.toCharArray();
+        while(left<right){
+           char temp = charArray[left];
+           charArray[left] = charArray[right];
+           charArray[right] = temp;
+           left++;
+           right--;
+        }
+        String numberString = new String(charArray);
+        return Integer.parseUnsignedInt(numberString, 2);
     }
 }
