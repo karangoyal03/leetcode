@@ -1,58 +1,36 @@
 class Solution {
+    int count =0;
     public int findCircleNum(int[][] isConnected) {
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        int V = isConnected.length;
-        for(int i=0;i<V;i++){
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < isConnected.length; i++) {
             adj.add(new ArrayList<>());
         }
-        for(int i=0;i<V;i++){
-            for(int j=0;j<V;j++){
-                if(isConnected[i][j] ==1 && i!=j){
+        for (int i = 0; i < isConnected.length; i++) {
+            for (int j = 0; j < isConnected[i].length; j++) {
+                if (isConnected[i][j] == 1 && i != j) {
                     adj.get(i).add(j);
-                    adj.get(j).add(i);
                 }
             }
         }
 
-        boolean[] visited = new boolean[V];
-        int count =0;
-        for(int i =0;i<V;i++){
-            if(visited[i] == false){
-                count++;
-                // dfs(i,adj,visited);
-                bfs(i,adj,visited);
+        boolean[] visited = new boolean[isConnected.length];
+        for(int i=0;i<adj.size();i++){
+            if(!visited[i]){
+            dfs(i,visited,adj);
+            count++;
             }
         }
 
         return count;
-
+    
     }
 
-    private void dfs(int node ,ArrayList<ArrayList<Integer>> adj , boolean[] visited){
+    public void dfs(int node , boolean[] visited, List<List<Integer>> adj){
         visited[node] = true;
-        for( int it : adj.get(node)){
-            if(visited[it] == false){
-                dfs(it,adj,visited);
+        for(int it : adj.get(node)){
+            if(!visited[it]){
+                dfs(it,visited,adj);
             }
         }
     }
-
-    private void bfs(int node , ArrayList<ArrayList<Integer>> adj , boolean[] visited) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(node);
-        visited[node] = true;
-
-        while(!queue.isEmpty()) {
-            int n = queue.poll();
-
-            for(int it : adj.get(n)){
-                if(visited[it] == false){
-                    visited[it] = true;
-                    queue.add(it);
-                }
-            }
-        }
-    }
-
-
 }
