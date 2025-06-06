@@ -3,9 +3,10 @@ class Solution {
         int start =0;
         int end = numbers.length-1;
         while(start<end){
-            if(numbers[start]+ numbers[end] < target){
+            int sum = numbers[start] + numbers[end];
+            if(sum<target){
                 start++;
-            }else if(numbers[start]+numbers[end]>target){
+            }else if(sum>target){
                 end--;
             }else{
                 return new int[]{start+1,end+1};
@@ -13,4 +14,5 @@ class Solution {
         }
         return new int[]{-1,-1};
     }
+
 }
