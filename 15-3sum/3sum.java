@@ -9,7 +9,6 @@ class Solution {
                 int rem = 0 - (nums[i] + nums[j]);
                  if (map.containsKey(rem)) {
                     List<Integer> triplet = Arrays.asList(nums[i], nums[j], rem);
-                    Collections.sort(triplet); // sort to avoid duplicates
                     set.add(triplet);
                 }
                 map.put(nums[j], true);
