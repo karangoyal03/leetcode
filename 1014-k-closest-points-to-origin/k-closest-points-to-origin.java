@@ -1,24 +1,20 @@
 class Solution {
+    PriorityQueue<int[]> queue = new PriorityQueue<>((a,b)-> a[2] - b[2]);
     public int[][] kClosest(int[][] points, int k) {
-    PriorityQueue<double[]> queue = new PriorityQueue<>((double[] a, double[] b) -> {
-        return Double.compare(b[1], a[1]);
-    });
 
-    for (int i = 0; i < points.length; i++) {
-        int x2 = points[i][0];
-        int y2 = points[i][1];
-        double distanceSquare = x2 * x2 + y2 * y2;
-        queue.offer(new double[]{i, distanceSquare});
+        int[][] result = new int[k][2];
 
-        if (queue.size() > k) {
-            queue.poll();
+        for(int[] point : points){
+            int distance = (int)(Math.pow(point[0],2) + Math.pow(point[1],2));
+            queue.add(new int[]{point[0],point[1],distance});
         }
-    }
 
-    int[][] result = new int[k][2];
-    for (int i = 0; i < k; i++) {
-        result[i] = points[(int) queue.poll()[0]];
-    }
-    return result;
+        for(int i=0;i<k;i++){
+            int[] point = queue.poll();
+            result[i] = new int[]{point[0],point[1]};
+        }
+
+        return result;
+
     }
 }
